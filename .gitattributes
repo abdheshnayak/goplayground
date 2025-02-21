@@ -1,0 +1,3 @@
+*.wasm binary
+/out/main.css binary
+/out/wasm_exec.js binary

@@ -1,0 +1,30 @@
+version : "3"
+
+# GOOS=js GOARCH=wasm
+env:
+  GOOS: js
+  GOARCH: wasm
+
+tasks:
+  build:
+    cmds:
+      - go build -o out/main.wasm
+
+  css:build:
+    cmds:
+      - tailwindcss -i ./out/input.css -o ./out/main.css
+
+  css:watch:
+    cmds:
+      - tailwindcss -i ./out/input.css -o ./out/main.css --watch
+
+  dev:
+    cmds:
+      - nodemon -q -e go --signal SIGTERM --exec "task build"
+
+  serve:
+    cmds:
+      - live-server out
+  vim:
+    cmds:
+      - nvim .
