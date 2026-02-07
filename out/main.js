@@ -14,6 +14,18 @@ async function loadWasm() {
 var goCode = ace.edit("gocode");
 var inputEditor = ace.edit("input");
 
+function getAceTheme() {
+  return window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches
+    ? "ace/theme/chrome"
+    : "ace/theme/monokai";
+}
+
+function applyEditorTheme() {
+  var theme = getAceTheme();
+  goCode.setTheme(theme);
+  inputEditor.setTheme(theme);
+}
+
 function setToLocalStorage(key, value) {
   localStorage.setItem(key, value);
 }
@@ -55,6 +67,11 @@ func main() {
     fontSize: "16px",
   });
 
+  applyEditorTheme();
+  if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: light)").addEventListener("change", applyEditorTheme);
+  }
+
   function formatDocument() {
     // goCode
   }
@@ -91,7 +108,9 @@ async function executeGoCode() {
 
 
   const result = window.runGoCode(code, input); // Run Go code inside WASM
-  document.getElementById("output").innerText = result;
+  const outputEl = document.getElementById("output");
+  outputEl.innerText = result;
+  outputEl.setAttribute("data-status", String(result).startsWith("Error:") ? "error" : "");
 }
 
 // Load WASM when the page is ready

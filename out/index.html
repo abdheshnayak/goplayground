@@ -1,61 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Go Playground</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <!-- Ace Editor -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.35.5/ace.min.js" integrity="sha512-R5hy7s3Z71fNuiNr3GZuv8WlRtLq0EyGgYAZBT+/LoTvgyGqVdVxGXCdPBLiPXYFDh9dMpqAKEO8oy1oCYBdew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.35.5/ext-language_tools.min.js" integrity="sha512-4l33zsqrqf1PBA3iEZ399Jl9on7It0HngOkI3TG2c6W0wUyTiXRxd9Eh8zFBXNy8fMlgda/u4u1metnbEf5Hzg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.35.5/ext-code_lens.min.js" integrity="sha512-81QPqjkXeCVN8i0OfBEGy3Ix+IwfmHwQ7D103quJuOs18KwgO6ra7L//1ZBU1LVMelSMweA0cAQSPAhXVa9zYQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.35.5/ext-inline_autocomplete.min.js" integrity="sha512-StLvTHZa8ZUJvQFRdA+rKevfMqZwkGcdAabg13cCy/Gx3sc+7aTTTNJzc/nCZwJlWYhOskpBq0bw5uX3KAWJnA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.35.5/ext-error_marker.min.js" integrity="sha512-4J/0fXV7jbSwrb4fio0hSnjUgwbQaznUWkeeV/MyVq5O+kFMPDmDOddUJz/Log6cGJ3sCMheo0gvrathVL6Ylg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.35.5/ext-beautify.min.js" integrity="sha512-uXfi0GwpQZcHIhGOMMHeNYtBSjt7qDXjXHmjShWSp+RWMSmjdy69N7M/pufinvQLv6rSYlpbSXqSnLRzWE952w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.35.5/ext-options.min.js" integrity="sha512-0NqGeUZ9n04vTXeQwOZw8ObAgx8iIiKLwUE1CnthSAtKH0/3Ol1y94cYSDGfDQvuoXERe4w8X5e2FvIMKiQ3/Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ace-code-editor@1.2.3/lib/ace/theme/monokai.min.css">
-
-    <!-- and it's easy to individually load additional languages -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ace-code-editor@1.2.3/lib/ace/theme/monokai.min.css" />
 
     <link rel="stylesheet" href="./main.css" />
     <script src="./wasm_exec.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Go Code in Browser</title>
   </head>
   <body>
-    <div class="flex flex-col gap-3 p-3 h-screen">
-      <div class="flex items-center justify-between py-2">
-        <h1 class="text-3xl font-bold">Go Playground</h1>
-
-
-        <div class="flex items-center gap-2">
-          <a href="https://github.com/abdheshnayak/goplayground" target="_blank" class="text-gray-500 hover:text-gray-700 active:text-gray-900 font-bold">
-            <!-- github icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-github"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
-
-          </a>
-          <button class="bg-blue-500 hover:bg-blue-700 active:bg-blue-900 text-white font-bold py-1 px-4 rounded-full cursor-pointer" onclick="executeGoCode()">Run (Ctrl+Enter)</button>
-
-
+    <div class="playground">
+      <header class="playground-header">
+        <div class="playground-brand">
+          <span class="playground-logo" aria-hidden="true">//</span>
+          <h1 class="playground-title">Go Playground</h1>
         </div>
+        <div class="playground-actions">
+          <a href="https://github.com/abdheshnayak/goplayground" target="_blank" rel="noopener noreferrer" class="playground-link" aria-label="View on GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+          </a>
+          <button type="button" class="playground-run" onclick="executeGoCode()">
+            <span class="playground-run-icon" aria-hidden="true">▶</span>
+            Run
+            <span class="playground-run-shortcut">Ctrl+Enter</span>
+          </button>
+        </div>
+      </header>
 
-      </div>
-
-      <div class="flex-4" id="gocode">package main
+      <main class="playground-main">
+        <section class="playground-panel playground-panel-code">
+          <header class="playground-panel-header">
+            <span class="playground-panel-label">Code</span>
+          </header>
+          <div class="playground-editor-wrapper">
+            <div id="gocode" class="playground-editor">package main
 
 import "fmt"
 
 func main() {
-fmt.Println("Hello, world!")
+	fmt.Println("Hello, world!")
 }</div>
-      <div class="flex-1" id="input"></div>
+          </div>
+        </section>
 
+        <section class="playground-panel playground-panel-stdin">
+          <header class="playground-panel-header">
+            <span class="playground-panel-label">Standard input</span>
+          </header>
+          <div class="playground-editor-wrapper">
+            <div id="input" class="playground-editor"></div>
+          </div>
+        </section>
 
-      <div class="flex-1 rounded-md" id="output"></div>
-
+        <section class="playground-panel playground-panel-output">
+          <header class="playground-panel-header">
+            <span class="playground-panel-label">Output</span>
+          </header>
+          <div id="output" class="playground-output" role="log" aria-live="polite"></div>
+        </section>
+      </main>
     </div>
 
     <script src="./main.js"></script>

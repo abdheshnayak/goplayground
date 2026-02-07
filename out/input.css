@@ -1,13 +1,254 @@
 @import "tailwindcss";
 
-#output {
-  margin-top: 20px;
-  padding: 10px;
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  max-height: 200px;
-  overflow-y: auto;
+/* --- Theme: system preference (prefers-color-scheme) --- */
+/* Dark theme (default) */
+.playground {
+  --playground-bg: #0f172a;
+  --playground-surface: #1e293b;
+  --playground-border: #334155;
+  --playground-text: #f1f5f9;
+  --playground-text-muted: #94a3b8;
+  --playground-accent: #3b82f6;
+  --playground-accent-hover: #2563eb;
+  --playground-output-bg: #0f172a;
+  --playground-output-border: #334155;
+  --playground-panel-header-bg: rgba(0, 0, 0, 0.2);
+  --playground-link-hover-bg: rgba(255, 255, 255, 0.06);
+  --playground-run-shortcut-bg: rgba(0, 0, 0, 0.2);
+  --playground-run-shortcut-color: rgba(255, 255, 255, 0.85);
+  --playground-radius: 8px;
+  --playground-font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --playground-font-mono: "JetBrains Mono", "Fira Code", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  min-height: 100vh;
 }
+
+@media (prefers-color-scheme: light) {
+  .playground {
+    --playground-bg: #f1f5f9;
+    --playground-surface: #ffffff;
+    --playground-border: #e2e8f0;
+    --playground-text: #0f172a;
+    --playground-text-muted: #64748b;
+    --playground-accent: #2563eb;
+    --playground-accent-hover: #1d4ed8;
+    --playground-output-bg: #f8fafc;
+    --playground-output-border: #e2e8f0;
+    --playground-panel-header-bg: rgba(0, 0, 0, 0.04);
+    --playground-link-hover-bg: rgba(0, 0, 0, 0.06);
+    --playground-run-shortcut-bg: rgba(0, 0, 0, 0.12);
+    --playground-run-shortcut-color: rgba(255, 255, 255, 0.95);
+  }
+}
+
+/* --- Playground layout --- */
+.playground {
+  transition: background-color 0.2s ease, color 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  background: var(--playground-bg);
+  color: var(--playground-text);
+  font-family: var(--playground-font-sans);
+}
+
+/* --- Header --- */
+.playground-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  padding: 0.75rem 1.25rem;
+  background: var(--playground-surface);
+  border-bottom: 1px solid var(--playground-border);
+}
+
+.playground-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.playground-logo {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--playground-accent);
+  font-family: var(--playground-font-mono);
+}
+
+.playground-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.playground-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.playground-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--playground-text-muted);
+  border-radius: var(--playground-radius);
+  transition: color 0.15s, background 0.15s;
+}
+
+.playground-link:hover {
+  color: var(--playground-text);
+  background: var(--playground-link-hover-bg);
+}
+
+.playground-run {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #fff;
+  background: var(--playground-accent);
+  border: none;
+  border-radius: var(--playground-radius);
+  cursor: pointer;
+  transition: background 0.15s, transform 0.05s;
+}
+
+.playground-run:hover {
+  background: var(--playground-accent-hover);
+}
+
+.playground-run:active {
+  transform: scale(0.98);
+}
+
+.playground-run-icon {
+  font-size: 0.7rem;
+  opacity: 0.9;
+}
+
+.playground-run-shortcut {
+  margin-left: 0.25rem;
+  padding: 0.125rem 0.375rem;
+  font-size: 0.6875rem;
+  font-family: var(--playground-font-mono);
+  color: var(--playground-run-shortcut-color);
+  background: var(--playground-run-shortcut-bg);
+  border-radius: 4px;
+}
+
+/* --- Main content --- */
+.playground-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 1rem 1.25rem;
+  min-height: 0;
+}
+
+/* --- Panels --- */
+.playground-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--playground-surface);
+  border: 1px solid var(--playground-border);
+  border-radius: var(--playground-radius);
+  overflow: hidden;
+}
+
+.playground-panel + .playground-panel {
+  margin-top: 0.75rem;
+}
+
+.playground-panel-header {
+  flex-shrink: 0;
+  padding: 0.5rem 0.75rem;
+  background: var(--playground-panel-header-bg);
+  border-bottom: 1px solid var(--playground-border);
+}
+
+.playground-panel-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--playground-text-muted);
+}
+
+.playground-panel-code {
+  flex: 4;
+  min-height: 200px;
+}
+
+.playground-panel-stdin {
+  flex: 0 0 auto;
+  min-height: 100px;
+  max-height: 160px;
+}
+
+.playground-panel-output {
+  flex: 1;
+  min-height: 120px;
+  max-height: 280px;
+}
+
+/* --- Editor wrappers (Ace fills these) --- */
+.playground-editor-wrapper {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+.playground-editor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 14px;
+}
+
+/* --- Output --- */
+.playground-output {
+  flex: 1;
+  min-height: 80px;
+  padding: 0.75rem 1rem;
+  font-family: var(--playground-font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--playground-text);
+  background: var(--playground-output-bg);
+  border: none;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.playground-output:empty::before {
+  content: "Run your code to see output here.";
+  color: var(--playground-text-muted);
+  font-style: normal;
+}
+
+/* Error styling when output starts with "Error:" */
+.playground-output[data-status="error"] {
+  color: #dc2626;
+}
+
+@media (prefers-color-scheme: dark) {
+  .playground-output[data-status="error"] {
+    color: #f87171;
+  }
+}
+
+/* --- Legacy / fallback --- */
 .textarea {
   @apply w-full min-h-20 p-2 border-2 border-gray-700 rounded-md;
 }
